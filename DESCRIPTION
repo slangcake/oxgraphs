@@ -1,0 +1,32 @@
+Package: oxgraphs
+Title: Package for drawing graphs in the OE house style
+Version: 0.0.0.9000
+Authors@R: person("Sean", "Langcake", email = "slangcake@bisoxfordeconomics.com.au", role = c("aut", "cre"))
+Description: Package for drawing graphs in the OE house style. Contains functions for bringing in required packages, and importing data from regularly used sources (excel & Haver), transforming the data and plotting various chart styles.
+Depends: R (>= 3.5.2)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    dplyr,
+    plyr,
+    tidyr,
+    timeDate,
+    ggplot2,
+    lubridate,
+    readxl,
+    leaps,
+    tseries,
+    urca,
+    writexl,
+    reshape2,
+    cowplot,
+    ggplotify,
+    scales,
+    readabs,
+    caTools,
+    Haver,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
