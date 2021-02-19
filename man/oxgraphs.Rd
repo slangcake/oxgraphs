@@ -10,8 +10,8 @@ data import, data transformation and graphing. \cr
 In addition, the \code{\link{ox_setup}} function loads in the required packages and should be run in the preamble of any script.
 }
 \section{Data Import}{
- Data coming from excel or Haver are handled by the data_import function 
-\itemize{\item \code{\link{data_import}}} 
+ Data coming from excel or Haver are handled by the data_import function
+\itemize{\item \code{\link{data_import}}}
 \cr
 OE databases can also be directly imported using \itemize{
 \item \code{\link{oxoedb}} for GEM databases (defaults to importing Australian series only)
@@ -32,10 +32,15 @@ These functions are set up to accomodate data in 'long' format.
 \item \code{\link{difference}}
 \item \code{\link{cagr}}
 }
+These will switch data quickly from wide-to-long format and vice-versa.
+\itemize{
+\item \code{\link{w2l}}
+\item \code{\link{l2w}}
+}
 }
 
 \section{graphing}{
- each graph style (i.e. line, bar) is contained within a separate function. 
+ each graph style (i.e. line, bar) is contained within a separate function.
 There are some compulsory arguments, and other optional settings
 \itemize{
 \item \code{\link{ox_line_graph}}
