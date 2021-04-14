@@ -1,4 +1,4 @@
-#' oxgraphs: A package for drawing graphs in the oxford house style
+#' oxgraphs: A package for drawing graphs in the Oxford Economics house style
 #'
 #' The oxgraph package provides three categories of functions:
 #' data import, data transformation and graphing. \cr

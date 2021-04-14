@@ -1,5 +1,5 @@
 # oxgraphs
-A package for drawing graphs in the oxford house style
+A package for drawing graphs in the Oxford Economics house style
 
 To install, run the following:
 

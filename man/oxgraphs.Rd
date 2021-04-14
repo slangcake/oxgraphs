@@ -3,7 +3,7 @@
 \docType{package}
 \name{oxgraphs}
 \alias{oxgraphs}
-\title{oxgraphs: A package for drawing graphs in the oxford house style}
+\title{oxgraphs: A package for drawing graphs in the Oxford Economics house style}
 \description{
 The oxgraph package provides three categories of functions:
 data import, data transformation and graphing. \cr
