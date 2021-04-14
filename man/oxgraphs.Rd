@@ -52,7 +52,9 @@ There are some compulsory arguments, and other optional settings
 \item \code{\link{ox_column_graph}}
 \item \code{\link{ox_pie_graph}}}
 \cr
-There is also a function for automating forecast lines when data are imported from a databank file
+There is also a function for automating forecast lines when data are imported from a .db file
 \itemize{\item \code{\link{hist_end}}}
+Function for quickly saving .png files in correct dimensions
+\itemize{\item \code{\link{ox_save}}}
 }
 
