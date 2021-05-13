@@ -9,7 +9,7 @@ oxoedb(db, sect = "AUS", vars = NULL, mod_dir = "C:/OEF", ms = NULL)
 \arguments{
 \item{db}{The database to load}
 
-\item{sect}{Character. The country/countries you want to download variables for. Defaults to Australia.}
+\item{sect}{Character. The country/countries you want to download variables for. Defaults to Australia. Set to NULL to import all sectors}
 
 \item{vars}{Character. The variables to download. Defaults to all variables. Or use a custom selection.}
 

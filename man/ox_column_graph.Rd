@@ -21,7 +21,8 @@ ox_column_graph(
   rhs_var = NULL,
   colours = NULL,
   stack = 1,
-  flip = 0
+  flip = 0,
+  edit = 0
 )
 }
 \arguments{

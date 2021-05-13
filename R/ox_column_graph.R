@@ -1,5 +1,5 @@
 #' ox_column_graph
-#' 
+#'
 #' Draws undated columns graphs
 #' @param a Dataframe in long format containing 3 columns: Category, variable and value. Categories are on the x axis
 #' NOTE: if you don't want any labelling on the x-axis, set category to "". Useful if you only have one category, but multiple variables.
@@ -19,18 +19,18 @@
 #' @param stack Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked
 #' @param no_leg Binary. Set to 1 if you want to supress the legend
 #' @return h The graph as a list object (ggplot2)
-#' @examples 
+#' @examples
 #' \donttest{ox_column_graph(x,"Consumption","%, 2018 average",c(0,12,3))}
-#'@export 
+#'@export
 ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics, BIS Oxford Economics",
                             leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,y2_range=NULL,var_order=NULL,
-                            no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,colours=NULL,stack=1,flip=0){
-  
-  
+                            no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,colours=NULL,stack=1,flip=0,edit=0){
+
+
   #Some checks
   if(is.null(y2_range)){second_axis <- 0}else{second_axis <- 1}
   if(second_axis==1 & is.null(rhs_var)){stop("If you're going to have a second axis, you need to specify at least one variable as the rhs_var")}
-  
+
   if(!is.null(var_order)){
     if(is.numeric(var_order)){
       if(var_order==1){
@@ -41,33 +41,33 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
       if (length(var_order) != length(unique(a$category))) {
         stop("Your variable order doesn't equal the number of variables you want to plot")}
       a$category <- factor(a$category, levels = var_order)}}
-  
+
   #Define the colour pallette
   ox_colours <- ox_pallette()
   if(!is.null(colours)){ox_colours <- c(ox_colours[colours],ox_colours[-colours])}
-  
+
   if(second_axis==1){
     # Renaming and rescaling the variables that are on the RHS
     # Work out the linear transformation from primary to secondary axis
-    
+
     y1n <- y_range[1] #first axis min
     y2n <- y2_range[1] #second axis min
     y1x <- y_range[2] #first axis max
     y2x <- y2_range[2] #second axis max
-    
+
     a2 <- (y1x*y2n-y2x*y1n)/(y2n-y2x)
     if(y2n==0){a1 <- (y1x-a2)/y2x}else{a1 <- (y1n-a2)/y2n}
-    
+
     trans <- ~ (. - a2) / a1
-    
+
     for (j in rhs_var){
       a$value[a$variable==j] <- a$value[a$variable==j]*a1+a2
       levels(a$variable)[levels(a$variable)==j] <- paste0(j," (RHS)")
     }
   }
-  
+
   #Building the plot
-  
+
   if(stack==1 & flip==1){
     h <- ggplot(a)+
       geom_col(aes(category,value,fill=variable),size=1.05833)+
@@ -89,10 +89,10 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
       ox_theme(leg_pos)+
       labs(y="",caption=srce,title=ttl,subtitle=lh_units)
   }
-  
-  
+
+
   if(is.null(leg)){h <- h+scale_fill_manual(values=ox_colours)}else{h <- h+scale_fill_manual(values=ox_colours,labels=leg)}
-  
+
   if(second_axis==1){
     h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0),
                                sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
@@ -100,12 +100,12 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
   }
   else{h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),
                                   expand=c(0,0))}
-  
-  if(y_range[1]<0 & y_range[2]>0){ 
-    h <- h+geom_hline(yintercept = 0,size=1)} 
-  
+
+  if(y_range[1]<0 & y_range[2]>0){
+    h <- h+geom_hline(yintercept = 0,size=1)}
+
   if(leg_col!=1){h <- h+guides(fill=guide_legend(ncol=leg_col))}
   if(no_leg==1){h <- h+theme(legend.position="none")}
-  h <- titles_left(h) 
+  if (edit == 0){h <- titles_left(h)}
   return(h)
 }
