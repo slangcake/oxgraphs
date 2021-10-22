@@ -4,7 +4,14 @@
 \alias{oxoedb}
 \title{oxoedb}
 \usage{
-oxoedb(db, sect = "AUS", vars = NULL, mod_dir = "C:/OEF", ms = NULL)
+oxoedb(
+  db,
+  sect = "AUS",
+  vars = NULL,
+  mod_dir = "C:/OEF",
+  ms = NULL,
+  var_res = "V"
+)
 }
 \arguments{
 \item{db}{The database to load}
@@ -14,6 +21,8 @@ oxoedb(db, sect = "AUS", vars = NULL, mod_dir = "C:/OEF", ms = NULL)
 \item{vars}{Character. The variables to download. Defaults to all variables. Or use a custom selection.}
 
 \item{mod_dir}{Directory where your model software lives. Defaults to 'C:/OEF'}
+
+\item{var_res}{Option to import variable values ('V' - default) or residuals ('R')}
 }
 \value{
 List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.

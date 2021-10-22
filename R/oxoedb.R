@@ -5,32 +5,50 @@
 #'@param vars Character. The variables to download. Defaults to all variables. Or use a custom selection.
 #'@param sect Character. The country/countries you want to download variables for. Defaults to Australia. Set to NULL to import all sectors
 #'@param mod_dir Directory where your model software lives. Defaults to 'C:/OEF'
+#'@param var_res Option to import variable values ('V' - default) or residuals ('R')
 #'@return List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.
 #'These objects need to be renamed after you run this function
 #' @examples
 #' \donttest{x <- oxoedb('Oct19.db') data <- x[[1]] h_end <- x[[2]]}
 #'@export
 
-oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL){
+oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL, var_res = 'V'){
+
+  if(!(var_res %in% c('V','R'))){
+    stop("var_res needs to be set to 'V' or 'R'")
+  }
 
   if(!is.null(sect)){
-    if(sect=='AUS'){
+    if(length(sect)==1){
+      if(sect=='AUS'){
 
-      if(is.null(vars)){
-        print(paste0('Importing all Australian variables from ',db))
-      }else{
-        print(paste0('Importing ',vars,' for Australia from ',db))
-      }
+        if(is.null(vars)){
+          print(paste0('Importing all Australian variables from ',db))
+        }else{
+          print(paste0('Importing ',vars,' for Australia from ',db))
+        }
 
-      a <- read_oedb(db,sector=c('AUSTRALI','AUS_DET'),mnemonic=vars,model_dir=mod_dir,as_xts=0,fix_call=FALSE,mnemonic_sector=ms)
-    }else{
-      if(is.null(vars)){
-        print(paste0('Importing all variables for ',sect,' from ',db))
-      }else{
-        print(paste0('Importing ',vars,' for ',sect,' from ',db))
+        a <- read_oedb(db,sector=c('AUSTRALI','AUS_DET'),
+                       mnemonic=vars,
+                       model_dir=mod_dir,
+                       as_xts=0,
+                       fix_call=FALSE,
+                       mnemonic_sector=ms,
+                       type = var_res)
+      } }else{
+        if(is.null(vars)){
+          print(paste0('Importing all variables for ',sect,' from ',db))
+        }else{
+          print(paste0('Importing ',vars,' for ',sect,' from ',db))
+        }
+        a <- read_oedb(db,sector=sect,
+                       mnemonic=vars,
+                       model_dir=mod_dir,
+                       as_xts=0,
+                       fix_call=FALSE,
+                       mnemonic_sector=ms,
+                       type = var_res)
       }
-      a <- read_oedb(db,sector=sect,mnemonic=vars,model_dir=mod_dir,as_xts=0,fix_call=FALSE,mnemonic_sector=ms)
-    }
   }else{
     if(is.null(vars)){
       print(paste0('Attempting to import all variables for all sectors from ',db))
@@ -38,7 +56,13 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL){
     }else{
       print(paste0('Importing ',vars,' for all sectors from ',db))
     }
-    a <- read_oedb(db,sector=sect,mnemonic=vars,model_dir=mod_dir,as_xts=0,fix_call=FALSE,mnemonic_sector=ms)
+    a <- read_oedb(db,sector=sect,
+                   mnemonic=vars,
+                   model_dir=mod_dir,
+                   as_xts=0,
+                   fix_call=FALSE,
+                   mnemonic_sector=ms,
+                   type = var_res)
   }
 
 
@@ -46,8 +70,10 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL){
   colnames(data)[1] = 'Dates'
   data <- data %>% melt(.,'Dates')
 
-  if(!is.null(sect)){
-    if(sect=='AUS'){data$variable <- data$variable %>% gsub("_AUSTRALI","",.)%>% gsub("_AUS_DET","",.)
+  if(length(sect)==1){
+    if(!is.null(sect)){
+      if(sect=='AUS'){data$variable <- data$variable %>% gsub("_AUSTRALI","",.)%>% gsub("_AUS_DET","",.)
+      }
     }
   }
 
@@ -59,8 +85,10 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL){
   b$variable <- names(a$last_hist) %>% .revert_names()
   b$hist_end <- data$Dates[b$hist_end]
 
-  if(!is.null(sect)){
-    if(sect=='AUS'){b$variable <- b$variable %>% gsub("_AUSTRALI","",.)%>% gsub("_AUS_DET","",.)
+  if(length(sect)==1){
+    if(!is.null(sect)){
+      if(sect=='AUS'){b$variable <- b$variable %>% gsub("_AUSTRALI","",.)%>% gsub("_AUS_DET","",.)
+      }
     }
   }
   rownames(b) <- c()

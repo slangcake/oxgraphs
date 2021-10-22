@@ -4,7 +4,7 @@
 \alias{oxaiddb}
 \title{oxaiddb}
 \usage{
-oxaiddb(db, sect = NULL, vars = NULL, mod_dir = "C:/AID")
+oxaiddb(db, sect = NULL, vars = NULL, mod_dir = "C:/AID", var_res = "V")
 }
 \arguments{
 \item{db}{The database to load}
@@ -14,6 +14,8 @@ oxaiddb(db, sect = NULL, vars = NULL, mod_dir = "C:/AID")
 \item{vars}{Character. The variables to download. Defaults to all variables. Or use a custom selection.}
 
 \item{mod_dir}{Directory where your model software lives. Defaults to 'C:/AID'}
+
+\item{var_res}{Option to import variable values ('V' - default) or residuals ('R')}
 }
 \value{
 List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.

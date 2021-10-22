@@ -4,7 +4,7 @@
 \alias{oxgimdb}
 \title{oxgimdb}
 \usage{
-oxgimdb(db, mod_dir = "C:/GIM", vars = NULL, sect = "AUSTRALI")
+oxgimdb(db, mod_dir = "C:/GIM", vars = NULL, sect = "AUSTRALI", var_res = "V")
 }
 \arguments{
 \item{db}{The database to load}
@@ -14,6 +14,8 @@ oxgimdb(db, mod_dir = "C:/GIM", vars = NULL, sect = "AUSTRALI")
 \item{vars}{Character. The variables to download. Defaults to all variables. Or use a custom selection.}
 
 \item{sect}{Character. The sector(s) you want to download variables for. Defaults to Australia}
+
+\item{var_res}{Option to import variable values ('V' - default) or residuals ('R')}
 }
 \value{
 List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.

@@ -5,15 +5,21 @@
 #'@param sect Character. The sector(s) you want to download variables for. Defaults to all
 #'@param vars Character. The variables to download. Defaults to all variables. Or use a custom selection.
 #'@param mod_dir Directory where your model software lives. Defaults to 'C:/AID'
+#'@param var_res Option to import variable values ('V' - default) or residuals ('R')
 #'@return List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.
 #'These objects need to be renamed after you run this function
 #' @examples
 #' \donttest{x <- oxaiddb('Oct19.db') data <- x[[1]] h_end <- x[[2]]}
 #'@export
 
-oxaiddb <- function(db,sect=NULL,vars=NULL,mod_dir='C:/AID'){
+oxaiddb <- function(db,sect=NULL,vars=NULL,mod_dir='C:/AID',var_res = 'V'){
 
-  a <- read_oedb(db,sector=sect,mnemonic=vars,model_dir=mod_dir,as_xts=0,fix_call=FALSE)
+  a <- read_oedb(db,sector=sect,
+                 mnemonic=vars,
+                 model_dir=mod_dir,
+                 as_xts=0,
+                 fix_call=FALSE,
+                 type = var_res)
 
   data <- a$dat
   colnames(data)[1] = 'Dates'
