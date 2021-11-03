@@ -20,6 +20,7 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL, var_res = '
 
   if(!is.null(sect)){
     if(length(sect)==1){
+
       if(sect=='AUS'){
 
         if(is.null(vars)){
@@ -35,7 +36,7 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL, var_res = '
                        fix_call=FALSE,
                        mnemonic_sector=ms,
                        type = var_res)
-      } }else{
+      }else{
         if(is.null(vars)){
           print(paste0('Importing all variables for ',sect,' from ',db))
         }else{
@@ -49,21 +50,22 @@ oxoedb <- function(db,sect='AUS',vars=NULL,mod_dir='C:/OEF',ms=NULL, var_res = '
                        mnemonic_sector=ms,
                        type = var_res)
       }
-  }else{
-    if(is.null(vars)){
-      print(paste0('Attempting to import all variables for all sectors from ',db))
-      print('***NOT RECOMMENDED***')
-    }else{
-      print(paste0('Importing ',vars,' for all sectors from ',db))
     }
-    a <- read_oedb(db,sector=sect,
-                   mnemonic=vars,
-                   model_dir=mod_dir,
-                   as_xts=0,
-                   fix_call=FALSE,
-                   mnemonic_sector=ms,
-                   type = var_res)
-  }
+    }else{
+      if(is.null(vars)){
+        print(paste0('Attempting to import all variables for all sectors from ',db))
+        print('***NOT RECOMMENDED***')
+      }else{
+        print(paste0('Importing ',vars,' for all sectors from ',db))
+      }
+      a <- read_oedb(db,sector=sect,
+                     mnemonic=vars,
+                     model_dir=mod_dir,
+                     as_xts=0,
+                     fix_call=FALSE,
+                     mnemonic_sector=ms,
+                     type = var_res)
+    }
 
 
   data <- a$dat
