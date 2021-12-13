@@ -30,7 +30,8 @@ ox_dated_bar_graph(
   var_order = NULL,
   no_forc = 0,
   date_adj = 1,
-  edit = 0
+  edit = 0,
+  no_zero = 0
 )
 }
 \arguments{
@@ -85,6 +86,10 @@ ox_dated_bar_graph(
 \item{date_adj}{By default, dates are shifted so bars sit between ticks. This can be turned off (useful for high frequency charts)}
 
 \item{edit}{Setting to 0 returns a chart that can't be edited further. 1 returns an editabe chart - but it will need to be run through the titles_left function to be properyl typeset}
+
+\item{no_zero}{Supresses zero line}
+
+\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
 }
 \value{
 h The graph as a list object (ggplot2)
@@ -94,7 +99,7 @@ Draws dated bar graphs with a line series
 }
 \details{
 If using data from an Oxford databank, forecast lines will be automatically added if you run your data through the
- \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if 
+ \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if
  you have changed variable names, or for newly constructed variables.
 }
 \examples{

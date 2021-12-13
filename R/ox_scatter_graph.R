@@ -6,6 +6,7 @@
 #' @param ttl Title of the graph
 #' @param x_range X axis range
 #' @param y_range Y axis range
+#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
@@ -19,22 +20,23 @@
 #' @param subs Date to split the sample at
 #' @param no_leg Binary. Set to 1 if you want to supress the legend
 #' @return h The graph as a list object (ggplot2)
-#' @examples 
+#' @examples
 #' \donttest{ox_scatter_graph(x,"Labour market",x_range=c(4,8,1),y_range=c(1.5,4.5,0.5),xlab="Unemployment rate (%)",ylab="Wage growth (%)",subs=c('1/1/2008','1/1/2015'),connect=0,lobf=1)}
 #'@export
 ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
                              srce="Source: Haver Analytics, BIS Oxford Economics",
                              leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,subs=NULL,lobf=0,xlab=x_var,ylab=y_var,connect=0,
                              no_leg=0,colours=NULL){
+  th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
 
-  if(is.null(x_var)){x_var=levels(droplevels(a$variable))[1]} 
+  if(is.null(x_var)){x_var=levels(droplevels(a$variable))[1]}
   if(is.null(y_var)){y_var=levels(droplevels(a$variable))[2]}
 
   #Define the colour pallette
   ox_colours <- ox_pallette()
   if(!is.null(colours)){ox_colours <- c(ox_colours[colours],ox_colours[-colours])}
 
-  
+
   #Plot size and positioning
   scatter_theme<- function(){
     ox_theme(leg_pos)+
@@ -49,9 +51,9 @@ ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
   if(!is.null(subs)){
     a$id <- 1
     subs <- as.Date(subs,"%d/%m/%Y")
-    
+
     for(i in seq(1,length(subs))){
-    
+
     a$id[a$Dates>=subs[i]] <- i+1
     }
     a$id <- as.factor(a$id)

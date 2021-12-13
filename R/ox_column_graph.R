@@ -7,6 +7,7 @@
 #' @param lh_units Units for the LHS axis
 #' @param y_range Y axis range
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param flip Binary. Set to 1 for horizontal bar chart. Defaults to 0.
@@ -18,15 +19,17 @@
 #' @param colours Change the order of the colour pallete. Input as numbers of the positions you want used first
 #' @param stack Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked
 #' @param no_leg Binary. Set to 1 if you want to supress the legend
+#' @param no_zero Supresses zero line
 #' @return h The graph as a list object (ggplot2)
 #' @examples
 #' \donttest{ox_column_graph(x,"Consumption","%, 2018 average",c(0,12,3))}
 #'@export
 ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics, BIS Oxford Economics",
                             leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,y2_range=NULL,var_order=NULL,
-                            no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,colours=NULL,stack=1,flip=0,edit=0){
+                            no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,
+                            colours=NULL,stack=1,flip=0,edit=0,no_zero=0){
 
-
+  th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks
   if(is.null(y2_range)){second_axis <- 0}else{second_axis <- 1}
   if(second_axis==1 & is.null(rhs_var)){stop("If you're going to have a second axis, you need to specify at least one variable as the rhs_var")}
@@ -71,22 +74,22 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
   if(stack==1 & flip==1){
     h <- ggplot(a)+
       geom_col(aes(category,value,fill=variable),size=1.05833)+
-      ox_theme(leg_pos,flip=1)+ coord_flip() +
+      th(leg_pos,flip=1)+ coord_flip() +
       labs(y="",x="",caption=srce,title=ttl,subtitle=lh_units)
   } else if(stack==1 & flip==0){
     h <- ggplot(a)+
       geom_col(aes(category,value,fill=variable),size=1.05833)+
-      ox_theme(leg_pos)+
+      th(leg_pos)+
       labs(y="",caption=srce,title=ttl,subtitle=lh_units)
   } else if(stack==0 & flip ==1){
     h <- ggplot(a)+
       geom_col(aes(category,value,fill=variable),position=position_dodge(),size=1.05833)+
-      ox_theme(leg_pos,flip=1)+ coord_flip() +
+      th(leg_pos,flip=1)+ coord_flip() +
       labs(y="",x="",caption=srce,title=ttl,subtitle=lh_units)
   } else{
     h <- ggplot(a)+
       geom_col(aes(category,value,fill=variable),position=position_dodge(),size=1.05833)+
-      ox_theme(leg_pos)+
+      th(leg_pos)+
       labs(y="",caption=srce,title=ttl,subtitle=lh_units)
   }
 
@@ -96,13 +99,16 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
   if(second_axis==1){
     h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0),
                                sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
-      annotate("text",label=rh_units,y=y_range[2],x=length(unique(a$category))+0.5,size=20/2.83465,hjust=0.5+nudge_rh_units,vjust=-1.1)
-  }
+      annotate("text",label=rh_units,y=y_range[2],x=length(unique(a$category))+0.5,hjust=0.5+nudge_rh_units,vjust=-1,
+               family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               color = ifelse(thm=='ox_theme_html',"#495057", "black"))
+    }
   else{h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),
                                   expand=c(0,0))}
 
-  if(y_range[1]<0 & y_range[2]>0){
-    h <- h+geom_hline(yintercept = 0,size=1)}
+  if(y_range[1]<0 & y_range[2]>0 & no_zero==0){
+    h <- h+geom_hline(yintercept = 0,size=1*oxscale,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(leg_col!=1){h <- h+guides(fill=guide_legend(ncol=leg_col))}
   if(no_leg==1){h <- h+theme(legend.position="none")}

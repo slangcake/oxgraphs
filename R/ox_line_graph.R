@@ -1,9 +1,9 @@
 #' ox_line_graph
 #'
-#' Draws dated line graphs. 
-#' 
+#' Draws dated line graphs.
+#'
 #' If using data from an Oxford databank, forecast lines will be automatically added if you run your data through the
-#'  \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if 
+#'  \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if
 #'  you have changed variable names, or for newly constructed variables.
 #'
 #' @param a Dataframe in long format containing 3 columns: Dates, variable and value
@@ -11,10 +11,11 @@
 #' @param lh_units Units for the LHS axis
 #' @param x_range Date range: If x_range is entered as a number, will run from 1st observation of the first year, to end of the last year. Will use exact dates if x_range is entered in d/m/yy format
 #' @param y_range Y axis range
-#' @param x_break Frequency of x axis ticks. Defaults to 1 year. 
+#' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param leg_col Number of columns in the legend. Defaults to 1
@@ -42,23 +43,25 @@
 #' @param var_order Order you'd like to plot the variables in. You need to specify ALL variables by name
 #' @param edit Setting to 0 returns a chart that can't be edited further. 1 returns an editabe chart - but it will need to be run through the titles_left function to be properyl typeset
 #' @return h The graph as a list object (ggplot2)
-#' @examples 
+#' @examples
 #' \donttest{ox_line_graph(x,"Current Account","%, share of GDP",c(2000,2023),c(-10,4,2),fc=1,fc_date='1/3/2019')}
-#' 
+#'
 #' \donttest{ox_line_graph(x,"Retail Turnover & Consumer Confidence","%, year-ended growth",c(2000,2019),c(0,12,2),y2_range=c(80,140,10),rh_units="Index",rhs_var="ausvcc")}
 #'@export
 ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
                           leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
+                          thm = 'ox_theme',
                           rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,log=0,hlines=NULL,
                           hlinestyle=1,colours=NULL,eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,
                           x_seq=3,x_format="%Y",event_ypos=y_range[2],ltype=rep(1,nlevels(as.factor(a$variable))),
                           no_leg=0,invert_axis=0,no_zero=0,no_forc=0,var_order=NULL,oxscale=1,edit=0){
 
-    #Some checks
+  th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
+  #Some checks
   if(fc==1 & is.null(fc_date)){stop("If you're going to have a forecast line, you need to specify the forecast date")}
   if(is.null(y2_range)){second_axis <- 0}else{second_axis <- 1}
   if(second_axis==1 & is.null(rhs_var)){stop("If you're going to have a second axis, you need to specify at least one variable as the rhs_var")}
-  if(invert_axis==1){y2_range[1:2] <- rev(y2_range[1:2]) 
+  if(invert_axis==1){y2_range[1:2] <- rev(y2_range[1:2])
   y2_range[3] <- -y2_range[3]}
   #Define the colour pallette
   ox_colours <- ox_pallette()
@@ -98,7 +101,7 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
     x_range <- x_rng(x_range,a,FY)} else {
       x_range <- as.Date(x_range,"%d/%m/%Y")
     }
-  
+
   #If no forecast line is selected, this checks whether data from the Oxford model are being plotted, and automates a forecast line
   if(fc==0 & exists('h_end') & no_forc==0){
     dts <-h_end[which(h_end$variable %in% unique(a$variable)),]
@@ -124,7 +127,7 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
 
     geom_line(aes(colour=variable,linetype=variable),size=1.05833*oxscale)+
 
-    ox_theme(leg_pos,oxscale)+
+    th(leg_pos,oxscale)+
 
     scale_x_date(breaks=b_seq,labels=l_seq,limits=x_range[1:2],expand=c(0,0))+
 
@@ -132,49 +135,79 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
 
     labs(y="",caption=srce,title=ttl,subtitle=lh_units)
 
-  if(is.null(leg)){h <- h+scale_colour_manual(values=ox_colours)}else{h <- h+scale_colour_manual(values=ox_colours,labels=leg)}
-
-
+  if(is.null(leg)){
+    h <- h+scale_colour_manual(values=ox_colours)
+  }else{
+    h <- h+scale_colour_manual(values=ox_colours,labels=leg)}
 
   if(second_axis==1){
     if(invert_axis==1){
-      h <- h+ scale_y_continuous(trans='reverse',breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[2],y_range[1]),expand=c(0,0)
-                                 ,sec.axis=sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
-        annotate("text",label=rh_units,y=y_range[1],x=x_range[2],size=20/2.83465,hjust=0.5+nudge_rh_units,vjust=-1)} 
+      h <- h+ scale_y_continuous(trans='reverse',breaks=seq(y_range[1],y_range[2],y_range[3]),
+                                 limits=c(y_range[2],y_range[1]),expand=c(0,0),
+                                 sec.axis=sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
+        annotate("text",label=rh_units,y=y_range[1],x=x_range[2],hjust=0.5+nudge_rh_units,vjust=-1,
+                 family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+                 size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+                 color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
     else{
       h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0),
                                  sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
-        annotate("text",label=rh_units,y=y_range[2],x=x_range[2],size=20/2.83465,hjust=0.5+nudge_rh_units,vjust=-1)}}
+        annotate("text",label=rh_units,y=y_range[2],x=x_range[2],hjust=0.5+nudge_rh_units,vjust=-1,
+                 family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+                 size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+                 color = ifelse(thm=='ox_theme_html',"#495057", "black"))}}
   else{
     if(log==1){
       h <- h+ scale_y_continuous(trans="log",breaks=lseq,limits=c(lseq[1],lseq[length(lseq)]),expand=c(0,0))}
     else{
       h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0))}}
 
+
   if(fc==1){
-    h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale) +
-      annotate("text",label="Forecast",y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),size=20/2.83465*oxscale,hjust=-0.05,vjust=1)}else
-        if(fc==2){h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale) +
-          annotate("label",label="Forecast",label.size=0,y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),size=20/2.83465*oxscale,hjust=0.5,vjust=0.5)
-        }
+    h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale,
+                      color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
+      annotate("text",label="Forecast",y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=-0.05,vjust=1,
+               family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               color = ifelse(thm=='ox_theme_html',"#495057", "black"))
+
+  }else
+    if(fc==2){h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale,
+                                color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
+      annotate("label",label="Forecast",label.size=0,y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=0.5,vjust=0.5,
+               family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               color = ifelse(thm=='ox_theme_html',"#495057", "black"))
+    }
 
   if(y_range[1]<0 & y_range[2]>0 & no_zero==0){
-    h <- h+geom_hline(yintercept = 0,size=1*oxscale)}
+    h <- h+geom_hline(yintercept = 0,size=1*oxscale,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(leg_col!=1){h <- h+guides(col=guide_legend(ncol=leg_col))}
 
   if(FY==1){
-    h <- h+annotate("text",label="FY",y=y_range[1],x=x_range[2],size=20/2.83465*oxscale,hjust=1,vjust=3.2)}
+    h <- h+annotate("text",label="FY",y=y_range[1],x=x_range[2],hjust=1,vjust=3.2,
+                    family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+                    size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+                    color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
-  if(!is.null(hlines)){h <- h+geom_hline(yintercept=hlines,size=1*oxscale,linetype=hlinestyle)}
+  if(!is.null(hlines)){h <- h+geom_hline(yintercept=hlines,size=1*oxscale,linetype=hlinestyle,
+                                         color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
-  if(!is.null(eventdate)){h <- h+geom_vline(xintercept = as.numeric(as.Date(eventdate,"%d/%m/%Y")),size=1*oxscale,linetype=eventlinestyle) +
+  if(!is.null(eventdate)){h <- h+geom_vline(xintercept = as.numeric(as.Date(eventdate,"%d/%m/%Y")),
+                                            size=1*oxscale,linetype=eventlinestyle,
+                                            color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
     # annotate("text",label=event,event_ypos,x=as.Date(eventdate,"%d/%m/%Y"),size=20/2.83465,hjust=eventhjust,vjust=1)}
-    annotate("text",label=event,event_ypos,x=as.Date(eventdate,"%d/%m/%Y"),size=20/2.83465*oxscale,hjust=eventhjust,vjust=1)}
+    annotate("text",label=event,event_ypos,x=as.Date(eventdate,"%d/%m/%Y"),
+             hjust=eventhjust,vjust=1,
+             family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
+             size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+             color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
+
   if(no_leg==1){h <- h+theme(legend.position="none")}
-  
+
   if(edit==0){h <- titles_left(h)}
-  
+
   return(h)
 
 }

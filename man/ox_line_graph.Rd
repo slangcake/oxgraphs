@@ -18,6 +18,7 @@ ox_line_graph(
   fc = 0,
   fc_date = NULL,
   y2_range = NULL,
+  thm = "ox_theme",
   rh_units = lh_units,
   nudge_rh_units = 0,
   rhs_var = NULL,
@@ -69,6 +70,8 @@ ox_line_graph(
 \item{fc_date}{Date at which the forecast line appears}
 
 \item{y2_range}{Range for a second y axis}
+
+\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
 
 \item{rh_units}{Units for second y axis}
 
@@ -122,7 +125,7 @@ Draws dated line graphs.
 }
 \details{
 If using data from an Oxford databank, forecast lines will be automatically added if you run your data through the
- \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if 
+ \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if
  you have changed variable names, or for newly constructed variables.
 }
 \examples{

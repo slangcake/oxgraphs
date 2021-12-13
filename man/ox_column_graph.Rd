@@ -22,7 +22,8 @@ ox_column_graph(
   colours = NULL,
   stack = 1,
   flip = 0,
-  edit = 0
+  edit = 0,
+  no_zero = 0
 )
 }
 \arguments{
@@ -58,6 +59,10 @@ NOTE: if you don't want any labelling on the x-axis, set category to "". Useful 
 \item{stack}{Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked}
 
 \item{flip}{Binary. Set to 1 for horizontal bar chart. Defaults to 0.}
+
+\item{no_zero}{Supresses zero line}
+
+\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
 }
 \value{
 h The graph as a list object (ggplot2)

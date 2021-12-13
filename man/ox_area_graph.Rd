@@ -70,6 +70,8 @@ ox_area_graph(
 \item{no_forc}{Supresses the automated forecast line}
 
 \item{var_order}{Order you'd like to plot the variables in. You need to specify ALL variables by name}
+
+\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
 }
 \value{
 h The graph as a list object (ggplot2)
@@ -79,7 +81,7 @@ Draws area graphs
 }
 \details{
 If using data from an Oxford databank, forecast lines will be automatically added if you run your data through the
- \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if 
+ \code{\link{hist_end}} function. The information used is stored in a data frame called h_end. Note this will not work if
  you have changed variable names, or for newly constructed variables.
 }
 \examples{
