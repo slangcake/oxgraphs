@@ -27,7 +27,7 @@
 ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics, BIS Oxford Economics",
                             leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,y2_range=NULL,var_order=NULL,
                             no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,
-                            colours=NULL,stack=1,flip=0,edit=0,no_zero=0){
+                            colours=NULL,stack=1,flip=0,edit=0,no_zero=0,thm = 'ox_theme'){
 
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks

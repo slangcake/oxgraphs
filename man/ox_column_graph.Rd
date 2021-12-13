@@ -23,7 +23,8 @@ ox_column_graph(
   stack = 1,
   flip = 0,
   edit = 0,
-  no_zero = 0
+  no_zero = 0,
+  thm = "ox_theme"
 )
 }
 \arguments{

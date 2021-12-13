@@ -50,7 +50,8 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
                           leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
                           no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,hlines=NULL,
                           eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,event_ypos=y_range[2],
-                          hlinestyle=1,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,no_zero=0){
+                          hlinestyle=1,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,no_zero=0,thm = 'ox_theme'){
+
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks
   if(fc==1 & is.null(fc_date)){stop("If you're going to have a forecast line, you need to specify the forecast date")}

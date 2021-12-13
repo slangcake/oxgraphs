@@ -25,7 +25,8 @@ ox_area_graph(
   no_leg = 0,
   hlinestyle = 1,
   no_forc = 0,
-  var_order = NULL
+  var_order = NULL,
+  thm = "ox_theme"
 )
 }
 \arguments{

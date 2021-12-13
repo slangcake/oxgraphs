@@ -31,7 +31,8 @@ ox_dated_bar_graph(
   no_forc = 0,
   date_adj = 1,
   edit = 0,
-  no_zero = 0
+  no_zero = 0,
+  thm = "ox_theme"
 )
 }
 \arguments{

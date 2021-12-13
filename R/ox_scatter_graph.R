@@ -26,7 +26,7 @@
 ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
                              srce="Source: Haver Analytics, BIS Oxford Economics",
                              leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,subs=NULL,lobf=0,xlab=x_var,ylab=y_var,connect=0,
-                             no_leg=0,colours=NULL){
+                             no_leg=0,colours=NULL,thm = 'ox_theme'){
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
 
   if(is.null(x_var)){x_var=levels(droplevels(a$variable))[1]}

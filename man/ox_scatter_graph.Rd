@@ -21,7 +21,8 @@ ox_scatter_graph(
   ylab = y_var,
   connect = 0,
   no_leg = 0,
-  colours = NULL
+  colours = NULL,
+  thm = "ox_theme"
 )
 }
 \arguments{

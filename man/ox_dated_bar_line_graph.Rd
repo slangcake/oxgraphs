@@ -38,7 +38,8 @@ ox_dated_bar_line_graph(
   var_order = NULL,
   no_forc = 0,
   date_adj = 1,
-  no_zero = 0
+  no_zero = 0,
+  thm = "ox_theme"
 )
 }
 \arguments{

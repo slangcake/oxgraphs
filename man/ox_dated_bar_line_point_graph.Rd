@@ -33,7 +33,8 @@ ox_dated_bar_line_point_graph(
   pts_ser = NULL,
   pts_leg = NULL,
   date_adj = 1,
-  no_zero = 0
+  no_zero = 0,
+  thm = "ox_theme"
 )
 }
 \arguments{
