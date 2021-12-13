@@ -165,7 +165,7 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
                                sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
       annotate("text",label=rh_units,y=y_range[2],x=x_range[2],hjust=0.5+nudge_rh_units,vjust=-1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
   else{h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0))}
 
@@ -174,7 +174,7 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
                       color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
       annotate("text",label="Forecast",y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=-0.05,vjust=1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
 
   }else
@@ -182,12 +182,12 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
                                 color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
       annotate("label",label="Forecast",label.size=0,y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=0.5,vjust=0.5,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
     }
 
   if(y_range[1]<0 & y_range[2]>0 & no_zero==0){
-    h <- h+geom_hline(yintercept = 0,size=1*oxscale,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
+    h <- h+geom_hline(yintercept = 0,size=1,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(!is.null(hlines)){h <- h+geom_hline(yintercept=hlines,size=1,linetype=hlinestyle)}
   if(leg_col!=1){h <- h+guides(fill=guide_legend(ncol=leg_col))}
@@ -199,7 +199,7 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
   if(FY==1){
     h <- h+annotate("text",label="FY",y=y_range[1],x=x_range[2],hjust=1,vjust=3.2,
                     family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-                    size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+                    size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                     color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(no_leg==1){h <- h+theme(legend.position="none")}

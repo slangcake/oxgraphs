@@ -84,7 +84,7 @@ ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
                       color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
       annotate("text",label="Forecast",y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=-0.05,vjust=1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
 
   }else
@@ -92,7 +92,7 @@ ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
                                 color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
       annotate("label",label="Forecast",label.size=0,y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=0.5,vjust=0.5,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
     }
 
@@ -103,10 +103,10 @@ ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
   if(FY==1){
     h <- h+annotate("text",label="FY",y=y_range[1],x=x_range[2],hjust=1,vjust=3.2,
                     family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-                    size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+                    size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                     color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
-  if(!is.null(hlines)){h <- h+geom_hline(yintercept=hlines,size=1*oxscale,linetype=hlinestyle,
+  if(!is.null(hlines)){h <- h+geom_hline(yintercept=hlines,size=1,linetype=hlinestyle,
                                          color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(no_leg==1){h <- h+theme(legend.position="none")}
