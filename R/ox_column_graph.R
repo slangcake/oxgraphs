@@ -101,14 +101,14 @@ ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics
                                sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
       annotate("text",label=rh_units,y=y_range[2],x=length(unique(a$category))+0.5,hjust=0.5+nudge_rh_units,vjust=-1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
-               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
+               size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
     }
   else{h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),
                                   expand=c(0,0))}
 
   if(y_range[1]<0 & y_range[2]>0 & no_zero==0){
-    h <- h+geom_hline(yintercept = 0,size=1*oxscale,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
+    h <- h+geom_hline(yintercept = 0,size=1,color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
 
   if(leg_col!=1){h <- h+guides(fill=guide_legend(ncol=leg_col))}
   if(no_leg==1){h <- h+theme(legend.position="none")}
