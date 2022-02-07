@@ -7,7 +7,7 @@
 #'@export
 
 w2l <- function(x,rep_col='Dates'){
-  y <- melt(x,rep_col)
+  y <- reshape2::melt(x,rep_col)
   return(y)}
 
 
