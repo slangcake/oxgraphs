@@ -27,7 +27,6 @@ ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
                              srce="Source: Haver Analytics, BIS Oxford Economics",
                              leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,subs=NULL,lobf=0,xlab=x_var,ylab=y_var,connect=0,
                              no_leg=0,colours=NULL,thm = 'ox_theme'){
-  th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
 
   if(is.null(x_var)){x_var=levels(droplevels(a$variable))[1]}
   if(is.null(y_var)){y_var=levels(droplevels(a$variable))[2]}
@@ -38,13 +37,24 @@ ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
 
 
   #Plot size and positioning
-  scatter_theme<- function(){
-    ox_theme(leg_pos)+
-      theme(axis.title.y.left = element_text(angle = 90,margin=unit(c(0,0,0,0), "cm")),
-            axis.title.x =element_text(angle = 0,margin=unit(c(0,0,0.25,0), "cm")),
+  if(thm == 'ox_theme_html'){
+    scatter_theme<- function(){
+      ox_theme_html(leg_pos)+
+        theme(axis.title.y.left = element_text(angle = 90,margin=unit(c(0,0,0,0), "cm")),
+              axis.title.x =element_text(angle = 0,margin=unit(c(0,0,0.25,0), "cm")),
 
-            plot.subtitle=element_text(hjust=0.0,margin=unit(c(0.15,0,0.5,0),"cm"),size=0))
-      }
+              plot.subtitle=element_text(hjust=0.0,margin=unit(c(0.15,0,0.5,0),"cm"),size=0))
+
+    }
+  }else{
+    scatter_theme<- function(){
+      ox_theme(leg_pos)+
+        theme(axis.title.y.left = element_text(angle = 90,margin=unit(c(0,0,0,0), "cm")),
+              axis.title.x =element_text(angle = 0,margin=unit(c(0,0,0.25,0), "cm")),
+
+              plot.subtitle=element_text(hjust=0.0,margin=unit(c(0.15,0,0.5,0),"cm"),size=0))
+    }
+  }
 
   a <- spread(a,variable,value)
   drop_na(a)
