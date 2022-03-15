@@ -8,5 +8,5 @@
 ox_save <- function(n){
   if(!is.character(n)){stop('Graph title needs to be in character format')}
   ttl <- paste0(n,'.png')
-  ggsave(ttl,w=8.1,h=6.5)
+  ggsave(ttl, w = 9.03, h = 6.67)
 }
