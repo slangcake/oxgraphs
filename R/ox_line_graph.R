@@ -166,7 +166,7 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
   if(fc==1){
     h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale,
                       color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
-      annotate("text",label="Forecast",y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=-0.05,vjust=1,
+      annotate("text",label="Forecast",y=ifelse(invert_axis==0,y_range[2],y_range[1]),x=as.Date(fc_date,"%d/%m/%Y"),hjust=-0.05,vjust=1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
                size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
@@ -174,7 +174,7 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
   }else
     if(fc==2){h <- h+geom_vline(xintercept = as.numeric(as.Date(fc_date,"%d/%m/%Y")),size=1*oxscale,
                                 color = ifelse(thm=='ox_theme_html',"#495057", "black")) +
-      annotate("label",label="Forecast",label.size=0,y_range[2],x=as.Date(fc_date,"%d/%m/%Y"),hjust=0.5,vjust=0.5,
+      annotate("label",label="Forecast",label.size=0,y=ifelse(invert_axis==0,y_range[2],y_range[1]),x=as.Date(fc_date,"%d/%m/%Y"),hjust=0.5,vjust=0.5,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
                size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465*oxscale),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))
