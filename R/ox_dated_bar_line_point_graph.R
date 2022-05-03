@@ -163,7 +163,7 @@ ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_se
   if(second_axis==1){
     h <- h+ scale_y_continuous(breaks=seq(y_range[1],y_range[2],y_range[3]),limits=c(y_range[1],y_range[2]),expand=c(0,0),
                                sec.axis = sec_axis(trans=trans,breaks=seq(y2_range[1],y2_range[2],y2_range[3])))+
-      annotate("text",label=rh_units,y=y_range[2],x=length(unique(a$category))+0.5,hjust=0.5+nudge_rh_units,vjust=-1,
+      annotate("text",label=rh_units,y=y_range[2],x=x_range[2],hjust=0.5+nudge_rh_units,vjust=-1,
                family = ifelse(thm=='ox_theme_html',"Segoe UI",""),
                size = ifelse(thm=='ox_theme_html',18/2.83465, 20/2.83465),
                color = ifelse(thm=='ox_theme_html',"#495057", "black"))}
