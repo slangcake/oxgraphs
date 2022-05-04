@@ -29,6 +29,7 @@
 #' @param rh_units Units for second y axis
 #' @param nudge_rh_units Positioning of rh axis label;ling can be messy - this nudges the label left/right
 #' @param rhs_var Variable to be plotted on RHS axis
+#' @param stack Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked
 #' @param FY X axis in financial years (defaults to CY)
 #' @param colours Change the order of the colour pallete. Input as numbers of the positions you want used first
 #' @param var_order Order you'd like to plot the column variables in. You need to specify ALL variables by name
@@ -42,7 +43,7 @@
 #'@export
 
 ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
-                          leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
+                          leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,stack=1,
                           no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,
                           pts_ser=NULL,pts_leg=NULL,date_adj=1,no_zero=0,thm = 'ox_theme'){
 
@@ -56,6 +57,9 @@ ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_se
   #Defining functions used within this function
 
   ox_colours <- ox_pallette()
+
+  bar_pos=position_stack()
+  if(stack==0){bar_pos <- position_dodge()}
 
   if(!is.null(colours)){ox_colours <- c(ox_colours[colours],ox_colours[-colours])}
 
@@ -141,7 +145,7 @@ ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_se
 
   h <- ggplot()+
 
-    geom_col(data=bars,aes(Dates,value,fill=variable),size=1.05833)+
+    geom_col(data=bars,aes(Dates,value,fill=variable),size=1.05833,position=bar_pos)+
 
     geom_line(data=lns,aes(Dates,value,colour=variable),size=1.05833)+
 

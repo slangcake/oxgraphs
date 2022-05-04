@@ -35,6 +35,7 @@
 #' @param event_ypos Where the event label shows up on the y_axis (defaults to top of range)
 #' @param eventhjust Nudge to event label left/right
 #' @param var_order Order you'd like to plot the column variables in. You need to specify ALL variables by name
+#' @param stack Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked
 #' @param no_leg Binary. Set to 1 if you want to supress the legend
 #' @param hlines Horizontal lines you want added to the chart
 #' @param hlinestyle The style of the horizontal lines. Defaults to solid. Use numbers to define alternate styles i.e. 2= dashed
@@ -47,7 +48,7 @@
 #'@export
 
 ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
-                          leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
+                          leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,stack=1,
                           no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,hlines=NULL,
                           eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,event_ypos=y_range[2],
                           hlinestyle=1,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,no_zero=0,thm = 'ox_theme'){
@@ -58,6 +59,9 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
   if(is.null(y2_range)){second_axis <- 0}else{second_axis <- 1}
   if(second_axis==1 & is.null(rhs_var)){stop("If you're going to have a second axis, you need to specify at least one variable as the rhs_var")}
   if(is.null(line_ser)){stop("Need to specify a line series")}
+
+  bar_pos=position_stack()
+  if(stack==0){bar_pos <- position_dodge()}
 
   #Defining functions used within this function
 
@@ -144,7 +148,7 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
 
   h <- ggplot()+
 
-    geom_col(data=bars,aes(Dates,value,fill=variable),size=1.05833)+
+    geom_col(data=bars,aes(Dates,value,fill=variable),size=1.05833, position = bar_pos)+
 
     geom_line(data=lns,aes(Dates,value,colour=variable),size=1.05833)+
 

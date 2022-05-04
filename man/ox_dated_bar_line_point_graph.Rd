@@ -20,6 +20,7 @@ ox_dated_bar_line_point_graph(
   fc = 0,
   fc_date = NULL,
   y2_range = NULL,
+  stack = 1,
   no_leg = 0,
   rh_units = lh_units,
   nudge_rh_units = 0,
@@ -67,6 +68,8 @@ ox_dated_bar_line_point_graph(
 \item{fc_date}{Date at which the forecast line appears}
 
 \item{y2_range}{Range for a second y axis}
+
+\item{stack}{Variables stacked into one column (1), or plotted along the axis (0). Defaults to stacked}
 
 \item{no_leg}{Binary. Set to 1 if you want to supress the legend}
 
