@@ -11,7 +11,7 @@
 #' @param lh_units Units for the LHS axis
 #' @param x_range Date range: If x_range is entered as a number, will run from 1st observation of the first year, to end of the last year. Will use exact dates if x_range is entered in d/m/yy format
 #' @param y_range Y axis range
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
@@ -41,7 +41,7 @@
 ox_dated_bar_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
                                leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
                                no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,stack=1,x_seq=3,
-                               x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,edit=0,no_zero=0,thm = 'ox_theme'){
+                               x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,edit=0,no_zero=0,thm = 'ox_theme_html'){
 
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks

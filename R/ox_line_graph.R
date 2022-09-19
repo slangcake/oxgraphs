@@ -15,7 +15,7 @@
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param leg_col Number of columns in the legend. Defaults to 1
@@ -50,7 +50,7 @@
 #'@export
 ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
                           leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
-                          thm = 'ox_theme',
+                          thm = 'ox_theme_html',
                           rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,log=0,hlines=NULL,
                           hlinestyle=1,colours=NULL,eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,
                           x_seq=3,x_format="%Y",event_ypos=y_range[2],ltype=rep(1,nlevels(as.factor(a$variable))),

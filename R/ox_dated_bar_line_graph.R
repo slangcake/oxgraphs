@@ -11,7 +11,7 @@
 #' @param lh_units Units for the LHS axis
 #' @param x_range Date range: If x_range is entered as a number, will run from 1st observation of the first year, to end of the last year. Will use exact dates if x_range is entered in d/m/yy format
 #' @param y_range Y axis range
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param line_ser The series you want plotted as a line
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
@@ -51,7 +51,7 @@ ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL
                           leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,stack=1,
                           no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,hlines=NULL,
                           eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,event_ypos=y_range[2],
-                          hlinestyle=1,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,no_zero=0,thm = 'ox_theme'){
+                          hlinestyle=1,x_seq=3,x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,no_zero=0,thm = 'ox_theme_html'){
 
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks

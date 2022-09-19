@@ -35,7 +35,7 @@ ox_dated_bar_line_point_graph(
   pts_leg = NULL,
   date_adj = 1,
   no_zero = 0,
-  thm = "ox_theme"
+  thm = "ox_theme_html"
 )
 }
 \arguments{
@@ -99,7 +99,7 @@ ox_dated_bar_line_point_graph(
 
 \item{no_zero}{Supresses zero line}
 
-\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
+\item{thm}{Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style}
 }
 \value{
 h The graph as a list object (ggplot2)

@@ -18,7 +18,7 @@ ox_line_graph(
   fc = 0,
   fc_date = NULL,
   y2_range = NULL,
-  thm = "ox_theme",
+  thm = "ox_theme_html",
   rh_units = lh_units,
   nudge_rh_units = 0,
   rhs_var = NULL,
@@ -71,7 +71,7 @@ ox_line_graph(
 
 \item{y2_range}{Range for a second y axis}
 
-\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
+\item{thm}{Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style}
 
 \item{rh_units}{Units for second y axis}
 

@@ -24,7 +24,7 @@ ox_column_graph(
   flip = 0,
   edit = 0,
   no_zero = 0,
-  thm = "ox_theme"
+  thm = "ox_theme_html"
 )
 }
 \arguments{
@@ -63,7 +63,7 @@ NOTE: if you don't want any labelling on the x-axis, set category to "". Useful 
 
 \item{no_zero}{Supresses zero line}
 
-\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
+\item{thm}{Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style}
 }
 \value{
 h The graph as a list object (ggplot2)

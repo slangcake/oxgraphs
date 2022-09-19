@@ -7,7 +7,7 @@
 #' @param lh_units Units for the LHS axis
 #' @param y_range Y axis range
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param flip Binary. Set to 1 for horizontal bar chart. Defaults to 0.
@@ -27,7 +27,7 @@
 ox_column_graph <- function(a,ttl,lh_units,y_range,srce="Source: Haver Analytics, BIS Oxford Economics",
                             leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,y2_range=NULL,var_order=NULL,
                             no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,
-                            colours=NULL,stack=1,flip=0,edit=0,no_zero=0,thm = 'ox_theme'){
+                            colours=NULL,stack=1,flip=0,edit=0,no_zero=0,thm = 'ox_theme_html'){
 
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)
   #Some checks

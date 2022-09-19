@@ -6,7 +6,7 @@
 #' @param ttl Title of the graph
 #' @param x_range X axis range
 #' @param y_range Y axis range
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
@@ -26,7 +26,7 @@
 ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
                              srce="Source: Haver Analytics, BIS Oxford Economics",
                              leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,subs=NULL,lobf=0,xlab=x_var,ylab=y_var,connect=0,
-                             no_leg=0,colours=NULL,thm = 'ox_theme'){
+                             no_leg=0,colours=NULL,thm = 'ox_theme_html'){
 
   if(is.null(x_var)){x_var=levels(droplevels(a$variable))[1]}
   if(is.null(y_var)){y_var=levels(droplevels(a$variable))[2]}

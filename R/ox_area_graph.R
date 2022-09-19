@@ -11,7 +11,7 @@
 #' @param lh_units Units for the LHS axis
 #' @param x_range Date range: If x_range is entered as a number, will run from 1st observation of the first year, to end of the last year. Will use exact dates if x_range is entered in d/m/yy format
 #' @param y_range Y axis range
-#' @param thm Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications
+#' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
@@ -34,7 +34,7 @@
 #'@export
 ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
                           leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,FY=0,colours=NULL,x_seq=3,x_format="%Y",fc=0,fc_date=NULL,hlines=NULL,
-                          no_leg=0,hlinestyle=1,no_forc=0,var_order=NULL,thm = 'ox_theme'){
+                          no_leg=0,hlinestyle=1,no_forc=0,var_order=NULL,thm = 'ox_theme_html'){
 
   if(fc==1 & is.null(fc_date)){stop("If you're going to have a forecast line, you need to specify the forecast date")}
   th <- ifelse(thm=='ox_theme_html',ox_theme_html,ox_theme)

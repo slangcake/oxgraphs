@@ -26,7 +26,7 @@ ox_area_graph(
   hlinestyle = 1,
   no_forc = 0,
   var_order = NULL,
-  thm = "ox_theme"
+  thm = "ox_theme_html"
 )
 }
 \arguments{
@@ -72,7 +72,7 @@ ox_area_graph(
 
 \item{var_order}{Order you'd like to plot the variables in. You need to specify ALL variables by name}
 
-\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
+\item{thm}{Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style}
 }
 \value{
 h The graph as a list object (ggplot2)

@@ -22,7 +22,7 @@ ox_scatter_graph(
   connect = 0,
   no_leg = 0,
   colours = NULL,
-  thm = "ox_theme"
+  thm = "ox_theme_html"
 )
 }
 \arguments{
@@ -56,7 +56,7 @@ ox_scatter_graph(
 
 \item{colours}{Change the order of the colour pallete. Input as numbers of the positions you want used first}
 
-\item{thm}{Chart theme - function that defines style of chart. Defaults to pre-2022 OE house style. 'ox_theme_html' is a valid input for the new html style publications}
+\item{thm}{Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style}
 
 \item{y_lab}{Label for y axis. Defaults to second variable in the data frame}
 }
