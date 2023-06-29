@@ -11,7 +11,7 @@ ox_scatter_graph(
   y_range,
   x_var = NULL,
   y_var = NULL,
-  srce = "Source: Haver Analytics, BIS Oxford Economics",
+  srce = "Source: Haver Analytics, Oxford Economics",
   leg = NULL,
   leg_pos = c(0.02, 0.9),
   leg_col = 1,
@@ -38,7 +38,7 @@ ox_scatter_graph(
 
 \item{y_var}{The variable to go on the y axis. Defaults to second variable in the data frame}
 
-\item{srce}{Defaults to "Source: Haver Analytics, BIS Oxford Economics"}
+\item{srce}{Defaults to "Source: Haver Analytics, Oxford Economics"}
 
 \item{leg}{Legend entries. Defaults to variable names}
 

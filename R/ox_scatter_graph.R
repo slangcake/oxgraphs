@@ -7,7 +7,7 @@
 #' @param x_range X axis range
 #' @param y_range Y axis range
 #' @param thm Chart theme - function that defines style of chart. Defaults to 'ox_theme_html'. Use 'ox_theme for previous OE house style
-#' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param srce Defaults to "Source: Haver Analytics, Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param leg_col Number of columns in the legend. Defaults to 1
@@ -24,7 +24,7 @@
 #' \donttest{ox_scatter_graph(x,"Labour market",x_range=c(4,8,1),y_range=c(1.5,4.5,0.5),xlab="Unemployment rate (%)",ylab="Wage growth (%)",subs=c('1/1/2008','1/1/2015'),connect=0,lobf=1)}
 #'@export
 ox_scatter_graph <- function(a,ttl,x_range,y_range,x_var=NULL,y_var=NULL,
-                             srce="Source: Haver Analytics, BIS Oxford Economics",
+                             srce="Source: Haver Analytics, Oxford Economics",
                              leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,subs=NULL,lobf=0,xlab=x_var,ylab=y_var,connect=0,
                              no_leg=0,colours=NULL,thm = 'ox_theme_html'){
 

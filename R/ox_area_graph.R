@@ -15,7 +15,7 @@
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
-#' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param srce Defaults to "Source: Haver Analytics, Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param leg_col Number of columns in the legend. Defaults to 1
@@ -32,7 +32,7 @@
 #' @examples
 #' \donttest{ox_area_graph(a,ttl='Your title',lh_units='Units',x_range=c(2010,2019),y_range=c(0,400,100))}
 #'@export
-ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
+ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, Oxford Economics",
                           leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,FY=0,colours=NULL,x_seq=3,x_format="%Y",fc=0,fc_date=NULL,hlines=NULL,
                           no_leg=0,hlinestyle=1,no_forc=0,var_order=NULL,thm = 'ox_theme_html'){
 

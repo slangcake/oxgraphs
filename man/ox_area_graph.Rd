@@ -11,7 +11,7 @@ ox_area_graph(
   x_range,
   y_range,
   x_break = "1 year",
-  srce = "Source: Haver Analytics, BIS Oxford Economics",
+  srce = "Source: Haver Analytics, Oxford Economics",
   leg = NULL,
   leg_pos = c(0.02, 0.9),
   leg_col = 1,
@@ -42,7 +42,7 @@ ox_area_graph(
 
 \item{x_break}{Frequency of x axis ticks. Defaults to 1 year.}
 
-\item{srce}{Defaults to "Source: Haver Analytics, BIS Oxford Economics"}
+\item{srce}{Defaults to "Source: Haver Analytics, Oxford Economics"}
 
 \item{leg}{Legend entries. Defaults to variable names}
 

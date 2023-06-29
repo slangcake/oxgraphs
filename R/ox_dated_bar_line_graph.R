@@ -16,7 +16,7 @@
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
-#' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param srce Defaults to "Source: Haver Analytics, Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param line_leg Legend for the line series. Defaults to 'Total'
 #' @param leg_pos Positioning of legend in cartesian coordinate format
@@ -47,7 +47,7 @@
 #' \donttest{ox_dated_bar_line_graph(x,'Consumption','%, y/y',c(2012,2019),c(0,4,1),line_ser='line_series')}
 #'@export
 
-ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
+ox_dated_bar_line_graph <- function(a,ttl,lh_units,x_range,y_range,line_ser=NULL,x_break="1 year",srce="Source: Haver Analytics, Oxford Economics",
                           leg=NULL,line_leg="Total",leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,stack=1,
                           no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,hlines=NULL,
                           eventdate=NULL,eventlinestyle=1,event="Specify an event title",eventhjust=-0.02,event_ypos=y_range[2],

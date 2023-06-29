@@ -8,7 +8,7 @@ ox_pie_graph(
   a,
   ttl,
   lh_units = "",
-  srce = "Source: Haver Analytics, BIS Oxford Economics",
+  srce = "Source: Haver Analytics, Oxford Economics",
   leg = NULL,
   leg_pos = c(0.02, 0.9),
   leg_col = 1,
@@ -22,7 +22,7 @@ ox_pie_graph(
 
 \item{lh_units}{Units for the LHS axis}
 
-\item{srce}{Defaults to "Source: Haver Analytics, BIS Oxford Economics"}
+\item{srce}{Defaults to "Source: Haver Analytics, Oxford Economics"}
 
 \item{leg}{Legend entries. Defaults to variable names}
 

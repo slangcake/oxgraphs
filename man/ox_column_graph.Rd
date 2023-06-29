@@ -9,7 +9,7 @@ ox_column_graph(
   ttl,
   lh_units,
   y_range,
-  srce = "Source: Haver Analytics, BIS Oxford Economics",
+  srce = "Source: Haver Analytics, Oxford Economics",
   leg = NULL,
   leg_pos = c(0.02, 0.9),
   leg_col = 1,
@@ -37,7 +37,7 @@ NOTE: if you don't want any labelling on the x-axis, set category to "". Useful 
 
 \item{y_range}{Y axis range}
 
-\item{srce}{Defaults to "Source: Haver Analytics, BIS Oxford Economics"}
+\item{srce}{Defaults to "Source: Haver Analytics, Oxford Economics"}
 
 \item{leg}{Legend entries. Defaults to variable names}
 

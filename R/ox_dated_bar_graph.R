@@ -15,7 +15,7 @@
 #' @param x_break Frequency of x axis ticks. Defaults to 1 year.
 #' @param x_seq Frequency of labels on ticks. Defaults to every third tick
 #' @param x_format Date format on x axis. Defaults to YYYY. See https://www.r-bloggers.com/date-formats-in-r/ for alternatives.
-#' @param srce Defaults to "Source: Haver Analytics, BIS Oxford Economics"
+#' @param srce Defaults to "Source: Haver Analytics, Oxford Economics"
 #' @param leg Legend entries. Defaults to variable names
 #' @param leg_pos Positioning of legend in cartesian coordinate format
 #' @param leg_col Number of columns in the legend. Defaults to 1
@@ -38,7 +38,7 @@
 #' @examples
 #' \donttest{ox_dated_bar_graph(x,'Consumption','%, year average growth',c(2012,2019),c(0,9,3))}
 #' @export
-ox_dated_bar_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, BIS Oxford Economics",
+ox_dated_bar_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="Source: Haver Analytics, Oxford Economics",
                                leg=NULL,leg_pos=c(0.02,0.9),leg_col=1,fc=0,fc_date=NULL,y2_range=NULL,
                                no_leg=0,rh_units=lh_units,nudge_rh_units=0,rhs_var=NULL,FY=0,colours=NULL,stack=1,x_seq=3,
                                x_format="%Y",var_order=NULL,no_forc=0,date_adj=1,edit=0,no_zero=0,thm = 'ox_theme_html'){

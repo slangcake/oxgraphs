@@ -12,7 +12,7 @@ ox_dated_bar_line_graph(
   y_range,
   line_ser = NULL,
   x_break = "1 year",
-  srce = "Source: Haver Analytics, BIS Oxford Economics",
+  srce = "Source: Haver Analytics, Oxford Economics",
   leg = NULL,
   line_leg = "Total",
   leg_pos = c(0.02, 0.9),
@@ -58,7 +58,7 @@ ox_dated_bar_line_graph(
 
 \item{x_break}{Frequency of x axis ticks. Defaults to 1 year.}
 
-\item{srce}{Defaults to "Source: Haver Analytics, BIS Oxford Economics"}
+\item{srce}{Defaults to "Source: Haver Analytics, Oxford Economics"}
 
 \item{leg}{Legend entries. Defaults to variable names}
 
