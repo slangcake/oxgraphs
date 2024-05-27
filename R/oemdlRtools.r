@@ -4,7 +4,7 @@
   if (Sys.which("mdl") == "") {
     warning("This package requires the Oxford Economics Mdl tool to run.")
   }
-  
+
   if (system("mdl", ignore.stdout = TRUE, ignore.stderr = TRUE) != 1) {
     warning("This package requires the Oxford Economics Mdl tool to run.")
   }
@@ -228,29 +228,29 @@ oe_macromappings <- function() {
 #' @export
 read_oedb <- function(db, mnemonic = NULL, sector = NULL,
                         mnemonic_sector = NULL, type = "V", model_dir = "C:/OEF",
-                        start_year = 1980, end_year = 2050, verbose = TRUE,
+                        start_year = 1980, end_year = 2060, verbose = TRUE,
                         as_xts = TRUE,fix_call=TRUE) {
   # Check if Mdl tool is available
   if (Sys.which("mdl") == "") {
     stop("This function requires the Oxford Economics Mdl tool to run.")
   }
-  
+
   if (system("mdl", ignore.stdout = TRUE, ignore.stderr = TRUE) != 1) {
     stop("This function requires the Oxford Economics Mdl tool to run.")
   }
-  
+
   # Check if database file exists
   if (!file.exists(db)) {
     stop("Database file not found.")
   }
-  
+
   # Check if level/residual switch is being used correctly
   if (!is.element(type, c("V", "R"))) {
     warning("Parameter type must be 'V' for variable data or 'R' for residual
            data. Defaulting 'V'.")
     type <- "V"
   }
-  
+
   # Print summary of function call
   if (verbose) {
     message("Call: db: ", db, "; mnemonic: ", mnemonic, "; sector: ", sector,
@@ -260,12 +260,12 @@ read_oedb <- function(db, mnemonic = NULL, sector = NULL,
             start_year, "; end_year: ", end_year, "; verbose: ", verbose,
             "; as_xts: ", as_xts)
   }
-  
+
   # Set name of temporary CSV files for data, variable, and fix information
   var_file <- paste0(gsub("\\\\", "", tempfile(tmpdir = "")), "var.csv")
   if(fix_call){fix_file <- paste0(gsub("\\\\", "", tempfile(tmpdir = "")), "fix.csv")}
   dat_file <- paste0(gsub("\\\\", "", tempfile(tmpdir = "")), "dat.csv")
-  
+
   # Assemble string for system call to Mdl
   if(fix_call){mdl_fix_call <- paste0("mdl export-entities -d ", db, " -m ", model_dir," -o ", fix_file, " -e fixes")}
   mdl_var_call <- paste0("mdl export-entities -d ", db, " -m ", model_dir," -o ", var_file, " -e variables")
@@ -277,16 +277,16 @@ read_oedb <- function(db, mnemonic = NULL, sector = NULL,
     if (verbose) {
       message("Running Mdl to export fix metadata.")
     }
-    
+
     if (system(mdl_fix_call) != 0) {
       stop("Mdl tool returned an error.")
     }
-    
+
     # Read in fix metadata
     if (verbose) {
       message("Reading in fix metadata.")
     }
-    
+
     fix_dat             <- read.csv(fix_file, header = TRUE,
                                     stringsAsFactors = FALSE, na.strings = "")
     fix_dat$Indicator   <- paste0(fix_dat$Mnemonic, "_", fix_dat$Sector)
@@ -298,172 +298,172 @@ read_oedb <- function(db, mnemonic = NULL, sector = NULL,
   if (verbose) {
     message("Running Mdl to export variable metadata.")
   }
-  
+
   if (system(mdl_var_call) != 0) {
     stop("Mdl tool returned an error.")
   }
-  
+
   # Read in variable metadata
   if (verbose) {
     message("Reading in variable metadata.")
   }
-  
+
   var_dat                <- read.csv(var_file, header = TRUE,
                                      stringsAsFactors = FALSE, na.strings = "")
   var_dat$Indicator      <- paste0(var_dat$Mnemonic, "_", var_dat$Sector)
   var_dat$Indicator      <- .clean_names(var_dat$Indicator)
   var_dat$End.of.History <- .oe_date(var_dat$End.of.History)
   var_dat$Is.percent     <- grepl(".*\\[%.*", var_dat$Description)
-  
+
   sel_content <- NULL
-  
+
   # If mnemonics and sectors have been supplied, build sel file
   if (!is.null(mnemonic) || !is.null(sector) || !is.null(mnemonic_sector)) {
     var_dat_subset <- var_dat
     if(fix_call){fix_dat_subset <- fix_dat}
-    
+
     if (verbose) {
       message("Building SEL file.")
     }
-    
+
     # If mnemonics have been supplied, subset variable information by mnemonics
     if (!is.null(mnemonic)) {
       mnemonic <- unique(mnemonic)
       var_dat_subset <- subset(var_dat_subset, Mnemonic %in% mnemonic)
       if(fix_call){fix_dat_subset <- subset(fix_dat_subset, Mnemonic %in% mnemonic)}
     }
-    
+
     # If sectors have been supplied, subset variable information by sectors
     if (!is.null(sector)) {
       sector  <- unique(sector)
       var_dat_subset <- subset(var_dat_subset, Sector %in% sector)
       if(fix_call){fix_dat_subset <- subset(fix_dat_subset, Sector %in% sector)}
     }
-    
+
     # If custom mnemonic-sector combinations have been supplied, add these
     if (!is.null(mnemonic_sector)) {
       mnemonic_sector <- unique(mnemonic_sector)
-      
+
       var_dat_sel <- var_dat
       var_dat_sel <- subset(var_dat_sel,
                             (Mnemonic %in% mnemonic_sector$Mnemonic) &
                               (Sector %in% mnemonic_sector$Sector))
       var_dat_subset <- rbind(var_dat_subset, var_dat_sel)
-      
+
       if(fix_call){fix_dat_sel <- fix_dat
       fix_dat_sel <- subset(fix_dat_sel,
                             (Mnemonic %in% mnemonic_sector$Mnemonic) &
                               (Sector %in% mnemonic_sector$Sector))
       fix_dat_subset <- rbind(fix_dat_subset, fix_dat_sel)}
     }
-    
+
     # Reset row IDs
     var_dat_subset <- unique(var_dat_subset)
     if(fix_call){fix_dat_subset <- unique(fix_dat_subset)}
     rownames(var_dat_subset) <- NULL
-    
+
     # Prepare content for temporary SEL file
     sel_content <- ""
-    
+
     for (i in 1:nrow(var_dat_subset)) {
       sel_line    <- paste0(unique(var_dat_subset$Mnemonic[i]), ",",
                             unique(var_dat_subset$Sector[i]), ",",
                             type, ",L,_\n")
       sel_content <- paste0(sel_content, sel_line)
     }
-    
+
     # Set name of temporary SEL file
     sel_file <- paste0(gsub("\\\\", "", tempfile(tmpdir = "")), "sel.sel")
-    
+
     # Write content to SEL file
     write(sel_content, file = sel_file)
-    
+
     # Append command to use SEL file to system call
     mdl_dat_call <- paste0(mdl_dat_call, " -s ", sel_file)
-    
+
     # Overwrite main variable and fix metadata
     var_dat <- var_dat_subset
     if(fix_call){fix_dat <- fix_dat_subset}
   }
-  
+
   # Execute system call to Mdl
   if (verbose) {
     message("Running Mdl to export data.")
   }
-  
+
   if (system(mdl_dat_call) != 0) {
     stop("Mdl tool returned an error.")
   }
-  
+
   # Load data into R
   if (verbose) {
     message("Reading in data.")
   }
-  
+
   dat <- read.csv(dat_file, header = FALSE, stringsAsFactors = FALSE,
                   na.strings = "")
-  
+
   # Create column names (format: Indicator_Location)
   mnemonic_row <- which(trimws(dat[, 1]) == "L") - 2
   sector_row   <- which(trimws(dat[, 1]) == "L") - 3
   date_row     <- which(trimws(dat[, 1]) == "L") + 2
   meta_end     <- which(trimws(dat[, 1]) == "L") + 4
-  
+
   dat_col <- paste0((unname(trimws(dat[mnemonic_row, ]))), "_",
                     (unname(trimws(dat[sector_row, ]))))
   dat_col <- .clean_names(dat_col)
   colnames(dat) <- make.names(dat_col, unique = TRUE)
   colnames(dat)[ncol(dat)] <- "date"
-  
+
   # Save metadata separately
   dat_head      <- dat[1:meta_end, -ncol(dat)]
   dat           <- dat[-(1:meta_end), ]
   rownames(dat) <- NULL
-  
+
   # Convert remaining data to numeric format while preserving data frame
   dat[, 1:ncol(dat)] <- sapply(dat[, 1:ncol(dat)],
                                function(x) as.numeric(as.character(x)))
-  
+
   # Carry forward last date value and append quarter
   year_ticks       <- !is.na(dat[, ncol(dat)])
   dat[, ncol(dat)] <- c(NA, dat[year_ticks, ncol(dat)])[cumsum(year_ticks) + 1]
   dat[, ncol(dat)] <- paste0(dat[, "date"], "-",
                              rep(c(1, 4, 7, 10), (nrow(dat) / 4)), "-", 1)
   dat[, ncol(dat)] <- as.Date(dat[, ncol(dat)])
-  
+
   # Put date column first
   dat <- dat[, c(ncol(dat), 1:(ncol(dat) - 1))]
-  
+
   # Save index of last historical data point
   last_hist <- trimws(dat_head[date_row, ])
   last_hist <- replace(last_hist, last_hist == "0", NA)
   last_hist <- .oe_date(last_hist)
   last_hist <- match(last_hist, dat$date, nomatch = NA)
   last_hist <- setNames(last_hist, nm = colnames(dat[, -1]))
-  
+
   # Save index of first forecast data point
   first_fcst <- last_hist + 1
   first_fcst <- replace(first_fcst, first_fcst > nrow(dat), nrow(dat))
-  
+
   # Remove temporary CSV files
   if (verbose) {
     message("Removing temporary files.")
   }
-  
+
   file.remove(var_file)
   if(fix_call){file.remove(fix_file)}
   file.remove(dat_file)
-  
+
   # Remove temporary SEL file
   if (!is.null(sel_content)) {
     file.remove(sel_file)
   }
-  
+
   # Return xts object
   if (as_xts) {
     dat <- xts::xts(x = dat[, -1], order.by = dat[, 1])
   }
-  
+
   # Return xts object and meta data
   if(fix_call){return(list(dat = dat, dat_head = dat_head, fix = fix_dat, var = var_dat,
                            type = type, last_hist = last_hist, first_fcst = first_fcst))

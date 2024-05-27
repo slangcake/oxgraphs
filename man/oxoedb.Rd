@@ -11,7 +11,8 @@ oxoedb(
   mod_dir = "C:/OEF",
   ms = NULL,
   var_res = "V",
-  start = 1980
+  start = 1980,
+  end = 2050
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ oxoedb(
 \item{var_res}{Option to import variable values ('V' - default) or residuals ('R')}
 
 \item{start}{Start year for data import}
+
+\item{ennd}{end year for data import}
 }
 \value{
 List with two objects: the data in long format ready for use with oxgraphs package & the h_end vector for automating forecast lines.

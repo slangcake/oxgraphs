@@ -12,7 +12,7 @@ read_oedb(
   type = "V",
   model_dir = "C:/OEF",
   start_year = 1980,
-  end_year = 2050,
+  end_year = 2060,
   verbose = TRUE,
   as_xts = TRUE,
   fix_call = TRUE
