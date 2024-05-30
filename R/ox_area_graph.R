@@ -58,7 +58,7 @@ ox_area_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
         fc_date=md}}}
   #The sequence for ticks and labels on the x-axis
   b_seq <- seq.Date(x_range[1],x_range[2],x_break)
-  if(FY==0){l_seq<-as.character(b_seq,x_format)}else{l_seq<-as.character(b_seq%m+%years(1),x_format)}
+  if(FY==0){l_seq<-format(b_seq,x_format)}else{l_seq<-format(b_seq%m+%years(1),x_format)}
   l_seq[c(FALSE,rep(TRUE,x_seq-1))] <- ""
 
   if(!is.null(var_order)){a$variable <- factor(a$variable,levels=var_order)

@@ -114,7 +114,7 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
 
   #The sequence for ticks and labels on the x-axis
   b_seq <- seq.Date(x_range[1],x_range[2],x_break)
-  if(FY==0){l_seq <- as.character(b_seq,x_format)} else {l_seq <- as.character(b_seq %m+% years(1),x_format)}
+  if(FY==0){l_seq <- format(b_seq,x_format)} else {l_seq <- format(b_seq %m+% years(1),x_format)}
   l_seq[c(FALSE,rep(TRUE,x_seq-1))] <- ""
 
   if(!is.null(var_order)){a$variable <- factor(a$variable,levels=var_order)
@@ -125,13 +125,13 @@ ox_line_graph <- function(a,ttl,lh_units,x_range,y_range,x_break="1 year",srce="
 
   h <- ggplot(a,aes(x=Dates,y=value,group=variable))+
 
-    geom_line(aes(colour=variable,linetype=variable),size=1.05833*oxscale)+
+    geom_line(aes(colour=variable,linetype=variable),linewidth=1.05833*oxscale)+
 
     th(leg_pos,oxscale)+
 
     scale_x_date(breaks=b_seq,labels=l_seq,limits=x_range[1:2],expand=c(0,0))+
 
-    scale_linetype_manual(values=ltype,guide=FALSE) +
+    scale_linetype_manual(values=ltype,guide='none') +
 
     labs(y="",caption=srce,title=ttl,subtitle=lh_units)
 

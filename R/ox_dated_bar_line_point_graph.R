@@ -116,7 +116,7 @@ ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_se
 
   #The sequence for ticks and labels on the x-axis
   b_seq <- seq.Date(x_range[1],x_range[2],x_break)
-  if(FY==0){l_seq<-as.character(b_seq,x_format)}else{l_seq<-as.character(b_seq%m+%years(1),x_format)}
+  if(FY==0){l_seq<-format(b_seq,x_format)}else{l_seq<-format(b_seq%m+%years(1),x_format)}
   l_seq[c(FALSE,rep(TRUE,x_seq-1))] <- ""
 
   #Changing dates so that bars sit between tick marks
@@ -147,7 +147,7 @@ ox_dated_bar_line_point_graph <- function(a,ttl,lh_units,x_range,y_range,line_se
 
     geom_col(data=bars,aes(Dates,value,fill=variable),size=1.05833,position=bar_pos)+
 
-    geom_line(data=lns,aes(Dates,value,colour=variable),size=1.05833)+
+    geom_line(data=lns,aes(Dates,value,colour=variable),linewidth=1.05833)+
 
     geom_point(data=pts,aes(Dates,value,shape=variable),colour=ox_colours_pts,fill=ox_colours_pts,size=2)+
 
