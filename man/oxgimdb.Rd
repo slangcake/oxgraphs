@@ -4,7 +4,15 @@
 \alias{oxgimdb}
 \title{oxgimdb}
 \usage{
-oxgimdb(db, mod_dir = "C:/GIM", vars = NULL, sect = "AUSTRALI", var_res = "V")
+oxgimdb(
+  db,
+  mod_dir = "C:/GIM",
+  vars = NULL,
+  sect = "AUSTRALI",
+  var_res = "V",
+  start = 1980,
+  end = 2050
+)
 }
 \arguments{
 \item{db}{The database to load}

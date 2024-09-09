@@ -4,7 +4,15 @@
 \alias{oxaiddb}
 \title{oxaiddb}
 \usage{
-oxaiddb(db, sect = NULL, vars = NULL, mod_dir = "C:/AID", var_res = "V")
+oxaiddb(
+  db,
+  sect = NULL,
+  vars = NULL,
+  mod_dir = "C:/AID",
+  var_res = "V",
+  start = 1980,
+  end = 2050
+)
 }
 \arguments{
 \item{db}{The database to load}

@@ -12,14 +12,16 @@
 #' \donttest{x <- oxaiddb('Oct19.db') data <- x[[1]] h_end <- x[[2]]}
 #'@export
 
-oxaiddb <- function(db,sect=NULL,vars=NULL,mod_dir='C:/AID',var_res = 'V'){
+oxaiddb <- function(db,sect=NULL,vars=NULL,mod_dir='C:/AID',var_res = 'V', start = 1980, end = 2050){
 
   a <- read_oedb(db,sector=sect,
                  mnemonic=vars,
                  model_dir=mod_dir,
                  as_xts=0,
                  fix_call=FALSE,
-                 type = var_res)
+                 type = var_res,
+                 start_year = start,
+                 end_year = end)
 
   data <- a$dat
   colnames(data)[1] = 'Dates'

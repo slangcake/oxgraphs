@@ -12,14 +12,16 @@
 #' \donttest{x <- oxgimdb('Oct19.db') data <- x[[1]] h_end <- x[[2]]}
 #'@export
 
-oxgimdb <- function(db,mod_dir='C:/GIM',vars=NULL,sect='AUSTRALI',var_res = 'V'){
+oxgimdb <- function(db,mod_dir='C:/GIM',vars=NULL,sect='AUSTRALI',var_res = 'V', start = 1980, end = 2050){
 
   a <- read_oedb(db,model_dir=mod_dir,
                  sector=sect,
                  mnemonic = vars,
                  as_xts=0,
                  fix_call=FALSE,
-                 type = var_res)
+                 type = var_res,
+                 start_year = start,
+                 end_year = end)
 
   data <- a$dat
   colnames(data)[1] = 'Dates'
