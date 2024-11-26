@@ -22,7 +22,7 @@ data_import(
 )
 }
 \arguments{
-\item{data_source}{Can only take on 4 values: Excel, Oxford, Haver or ABS. 
+\item{data_source}{Can only take on 4 values: Excel, Oxford, Haver or ABS.
 \itemize{
 \item Excel - user specified files - not very robust, data need to be in a very neat format with only one row for variable names.
 \item Oxford - used for databank downloads (useful for plotting our forecasts)
